@@ -22,6 +22,8 @@ public static class Extensions
             var loggerSettings = sp.GetRequiredService<IOptions<LoggerSettings>>().Value;
             string appName = loggerSettings.AppName;
             string elasticSearchUrl = loggerSettings.ElasticSearchUrl;
+            string seqUrl = loggerSettings.SeqUrl;
+            string seqApiKey = loggerSettings.SeqApiKey;
             bool writeToFile = loggerSettings.WriteToFile;
             bool structuredConsoleLogging = loggerSettings.StructuredConsoleLogging;
             string minLogLevel = loggerSettings.MinimumLogLevel;
@@ -29,6 +31,7 @@ public static class Extensions
             ConfigureConsoleLogging(serilogConfig, structuredConsoleLogging);
             ConfigureWriteToFile(serilogConfig, writeToFile);
             ConfigureElasticSearch(builder, serilogConfig, appName, elasticSearchUrl);
+            ConfigureSeq(builder, serilogConfig, seqUrl, seqApiKey);
             SetMinimumLogLevel(serilogConfig, minLogLevel);
             OverideMinimumLogLevel(serilogConfig);
             Console.WriteLine(FiggleFonts.Standard.Render(loggerSettings.AppName));
@@ -85,6 +88,16 @@ public static class Extensions
                 IndexFormat = indexFormat,
                 MinimumLogEventLevel = LogEventLevel.Information,
             })).Enrich.WithProperty("Environment", builder.Environment.EnvironmentName!);
+        }
+    }
+
+    private static void ConfigureSeq(WebApplicationBuilder builder, LoggerConfiguration serilogConfig, string seqUrl, string seqApiKey)
+    {
+        if (!string.IsNullOrEmpty(seqUrl))
+        {
+            serilogConfig.WriteTo.Async(writeTo =>
+                writeTo.Seq(seqUrl, LogEventLevel.Information, 10, apiKey: seqApiKey ))
+                .Enrich.WithProperty("Environment", builder.Environment.EnvironmentName!);
         }
     }
 

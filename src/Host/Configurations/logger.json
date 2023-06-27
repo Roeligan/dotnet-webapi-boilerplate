@@ -1,8 +1,10 @@
 {
   "LoggerSettings": {
     "AppName": "FSH.WebApi",
-    "ElasticSearchUrl": "http://localhost:9200",
-    "WriteToFile": true,
-    "StructuredConsoleLogging": false
+    "ElasticSearchUrl": "",
+    "SeqUrl": "http://192.168.45.10:5341",
+    "SeqApiKey": "",
+    "WriteToFile": false,
+    "StructuredConsoleLogging": true
   }
 }

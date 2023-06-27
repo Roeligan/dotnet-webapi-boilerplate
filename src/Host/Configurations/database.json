@@ -1,6 +1,12 @@
+//{
+//  "DatabaseSettings": {
+//    "DBProvider": "postgresql",
+//    "ConnectionString": "Host=localhost;Port=5432;Database=fshDb;Username=postgres;Password=admin;Include Error Detail=true"
+//  }
+//}
 {
   "DatabaseSettings": {
-    "DBProvider": "postgresql",
-    "ConnectionString": "Host=localhost;Port=5432;Database=fshDb;Username=postgres;Password=admin;Include Error Detail=true"
+    "DBProvider": "mssql",
+    "ConnectionString": "Data Source=.\\D45C;Initial Catalog=D45C;Integrated Security=True;MultipleActiveResultSets=True;TrustServerCertificate=true;"
   }
 }
